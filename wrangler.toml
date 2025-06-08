@@ -1,4 +1,4 @@
-name = "cdn-prewarm"
+name = "cdn-warming-up"
 main = "worker.js"
 compatibility_date = "2024-06-01"
 
