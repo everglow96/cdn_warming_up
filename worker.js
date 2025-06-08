@@ -1,4 +1,6 @@
-const urlsToWarm = [
+export default {
+  async fetch(request, env, ctx) {
+    const urls = [
     "https://simpler-lights.cc/wp-content/plugins/insert-headers-and-footers/build/admin-bar.css?ver=8afeca4aaad1d56fefb41623b6b7b000",
     "https://simpler-lights.cc/wp-content/plugins/translatepress-multilingual/assets/css/trp-floater-language-switcher.css?ver=2.9.15",
     "https://simpler-lights.cc/wp-content/plugins/translatepress-multilingual/assets/css/trp-language-switcher.css?ver=2.9.15",
@@ -166,19 +168,8 @@ const urlsToWarm = [
     "https://simpler-lights.cc/wp-content/themes/bricks/assets/js/libs/swiper.min.js?ver=8.4.4"
 ];
 
-async function handleRequest(request) {
-  for (const url of urlsToWarm) {
-    const req = new Request(url, {
-      method: 'GET',
-      headers: { 'User-Agent': 'Cloudflare-Cache-Warmer' },
-      cf: { cacheEverything: true }
-    });
-    await fetch(req);  // Cloudflare 自动缓存资源
+    await Promise.allSettled(urls.map(url => fetch(url)));
+
+    return new Response("Preload done.");
   }
-
-  return new Response('Static cache warming complete.', { status: 200 });
-}
-
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+};

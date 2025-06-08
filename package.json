@@ -1,0 +1,7 @@
+{
+  "name": "cdn-prewarm",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "wrangler publish"
+  }
+}
